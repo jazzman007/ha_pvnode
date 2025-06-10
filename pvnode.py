@@ -50,9 +50,9 @@ class Estimate:
             # move everything one minute back to make sure h:00 time gets
             # accounted in (h-1):00 - (h-1):59 slot
             # TODO: make it better
-            date = date.astimezone(self.api_timezone) - timedelta(minutes=1)
-            self.watts[date] = v['spec_watts'] * self.kWp
+            date = date.replace(tzinfo=self.api_timezone) - timedelta(minutes=1)
             date = date.replace(minute=0, second=0, microsecond=0)
+            self.watts[date] = v['spec_watts'] * self.kWp
             if date in tmp:
                 tmp[date].append(v['spec_watts'])
             else:
@@ -164,8 +164,8 @@ class PVNode:
     async def estimate(self):
         if self.estimate_cached and self.estimate_cached.now() < (self.estimate_cached.last_update + timedelta(hours=8)):
             return self.estimate_cached
-        loop = asyncio.get_running_loop()
-        return await loop.run_in_executor(None, self._estimate) 
+        self.estimate_cached = await asyncio.get_running_loop().run_in_executor(None, self._estimate) 
+        return self.estimate_cached
 
     def _estimate(self):
         panel_age_years = (date.today() - date.fromisoformat(self.instdate)).days / 365.25
