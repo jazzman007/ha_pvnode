@@ -218,7 +218,7 @@ class PVNode:
         self.weather_enabled = weather_enabled
     
     async def estimate(self):
-        if self.estimate_cached and self.estimate_cached.now() < (self.estimate_cached.last_update + timedelta(hours=8)):
+        if self.estimate_cached and self.estimate_cached.now() < (self.estimate_cached.last_update + timedelta(hours=3)):
             return self.estimate_cached
 
         self.estimate_cached = await asyncio.get_running_loop().run_in_executor(None, self._estimate) 
