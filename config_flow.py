@@ -18,6 +18,7 @@ from homeassistant.config_entries import (
 from homeassistant.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
 from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv, selector
+from homeassistant.helpers.selector import TextSelector, TextSelectorConfig, TextSelectorType
 
 from .const import (
     CONF_ORIENTATION,
@@ -73,7 +74,7 @@ class PVNodeFlowHandler(ConfigFlow, domain=DOMAIN):
                 {
                     vol.Required(
                         CONF_API_KEY, default=""
-                    ): str,
+                        ): TextSelector(TextSelectorConfig(type=TextSelectorType.PASSWORD)),
                     vol.Required(
                         CONF_NAME, default=self.hass.config.location_name
                     ): str,
@@ -137,7 +138,7 @@ class PVNodeOptionFlowHandler(OptionsFlow):
                                 CONF_API_KEY, ""
                             )
                         },
-                    ): str,
+                    ): TextSelector(TextSelectorConfig(type=TextSelectorType.PASSWORD)),
                     vol.Required(
                         CONF_SLOPE,
                         default=self.config_entry.options[CONF_SLOPE],
