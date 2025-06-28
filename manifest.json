@@ -1,11 +1,12 @@
 {
     "domain": "pvnode",
     "name": "PVNode",
+    "codeowners": ["@kuschiee", "@jazzman007"],
     "config_flow": true,
-    "documentation": "https://github.com/kuschiee/ha_pvnode",
-    "issue_tracker": "https://github.com/kuschiee/ha_pvnode",
+    "documentation": "https://github.com/jazzman007/ha_pvnode",
+    "issue_tracker": "https://github.com/jazzman007/ha_pvnode",
     "integration_type": "service",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "requirements": ["requests"],
     "iot_class": "cloud_polling"
 }
